@@ -10,9 +10,12 @@ body {
 }
 
 #content{
+	padding: 2px;
+	margin: 0px;
 	width: 100%;
 	height: 95%;
 	background-color: #55A44E;
+	text-align: center;
 }
 
 ul {
