@@ -1,13 +1,9 @@
 <?php
 //Sprawdzanie czy dana osoba jest zalogowana
 session_start();
-if(isset($_SESSION['zalogowany']))
+if((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany']==true))
 {
-	if($_SESSION['zalogowany']==false)
-	{
-		header('Location: index.php');
-		exit();
-	}
+	unset($_SESSION['blad']);
 }
 else
 {
@@ -30,26 +26,15 @@ else
 		</ul>
 	</div>
 	<div id="content">
-		<h1>Lista Urządzeń</h1>
-		<?php
-		require_once"connect.php";
-		$sum = 0;
-		$sql = "SELECT * FROM urzadzenia WHERE id_pomieszczenia = '".$_GET['room_id']."'";
-		$r = mysqli_query($conn, $sql);
-		while($rez = mysqli_fetch_array($r))
-		{	
-			echo "<p><a>".$rez['nazwa']."</a> <b>".$rez['zuzycie_energii']."</b></p>";
-			$sum += $rez['zuzycie_energii'];
-		}
-		echo "Suma: <b>".$sum."</b>";
-		$conn->close();
-		?>
+		<h1>Dodaj Urządzenie</h1>
 		<br><br>
-		<form action="new_device.php">
+		<form action="add_device.php" method="POST">
 			<?php
 			$room_id = $_GET['room_id'];
 			echo "<input type='hidden' name='room_id' value='".$room_id."' />";
 			?>
+			<input type="text" required="required" placeholder="Nazwa" name="name" />
+			<input type="number" required="required" min="0" placeholder="Zużycie energii" name="energy" />
 			<input type="submit" value="Dodaj Urządzenie" />
 		</form>
 	</div>
