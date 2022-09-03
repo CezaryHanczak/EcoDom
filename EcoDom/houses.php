@@ -30,6 +30,7 @@ else
 		<?php
 		require_once"connect.php";
 		$sum = 0;
+		$sum_of_kWh = 0;
 		$sql = "SELECT * FROM mieszkania WHERE id_uzytkownika = '".$_SESSION['id']."'";
 		$r = mysqli_query($conn, $sql);
 		while($rez = mysqli_fetch_array($r))
@@ -37,10 +38,22 @@ else
 			$sql2 = "SELECT SUM(zuzycie_energii) FROM urzadzenia WHERE id_mieszkania = '".$rez['id']."'";
 			$r2 = mysqli_query($conn, $sql2);
 			$rez2 = mysqli_fetch_row($r2);
-			echo "<p><a href=rooms.php?house_id=".$rez['id'].">".$rez['nazwa']."</a> <b>".$rez2[0]."</b></p>";
+			echo "<p><a href=rooms.php?house_id=".$rez['id'].">".$rez['nazwa']."</a> <b>".$rez2[0]." W</b></p>";
 			$sum += $rez2[0];
+			$sql2 = "SELECT SUM(sredni_czas_pracy*zuzycie_energii) FROM urzadzenia WHERE id_mieszkania = '".$rez['id']."'";
+			$r2 = mysqli_query($conn, $sql2);
+			$rez2 = mysqli_fetch_row($r2);
+			$sum_of_kWh += $rez2[0];
 		}
-		echo "Suma: <b>".$sum."</b>";
+		$sum_of_kWh /= 1000;
+		echo "Całkowita moc sprzętów: <b>".$sum." W</b></br>";
+		echo "Całkowita zużyta energia: <b>".$sum_of_kWh." kWh</b></br>";
+		$sql = "SELECT * FROM prad where id = '1'";
+		$r = mysqli_query($conn, $sql);
+		$rez = mysqli_fetch_array($r);
+		$sum_of_kWh *= $rez['cena_za_kWh'];
+		$sum_of_kWh = round($sum_of_kWh, 2);
+		echo "Szacunkowy koszt przy cenie ".$rez['cena_za_kWh']."zł/kWh to: <b>".$sum_of_kWh." zł</b>";
 		$conn->close();
 		?>
 		<br><br>

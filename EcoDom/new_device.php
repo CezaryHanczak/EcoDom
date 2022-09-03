@@ -35,6 +35,7 @@ else
 			?>
 			<input type="text" required="required" placeholder="Nazwa" name="name" />
 			<input type="number" required="required" min="0" placeholder="Zużycie energii" name="energy" />
+			<input type="number" required="required" min="0" placeholder="Średni czas użytkowania w ciągu dnia" name="time" />
 			<input type="submit" value="Dodaj Urządzenie" />
 		</form>
 	</div>
