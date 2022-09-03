@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 07 Cze 2022, 10:12
--- Wersja serwera: 10.1.36-MariaDB
--- Wersja PHP: 7.2.11
+-- Czas generowania: 03 Wrz 2022, 17:11
+-- Wersja serwera: 10.4.24-MariaDB
+-- Wersja PHP: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -21,6 +20,27 @@ SET time_zone = "+00:00";
 --
 -- Baza danych: `ecodom`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `fotowoltaika`
+--
+
+CREATE TABLE `fotowoltaika` (
+  `id` int(11) NOT NULL,
+  `mieszkanie_id` int(11) NOT NULL,
+  `ilosc_paneli` int(11) NOT NULL,
+  `powierzchnia_panela` int(11) NOT NULL,
+  `moc_panela` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
+
+--
+-- Zrzut danych tabeli `fotowoltaika`
+--
+
+INSERT INTO `fotowoltaika` (`id`, `mieszkanie_id`, `ilosc_paneli`, `powierzchnia_panela`, `moc_panela`) VALUES
+(1, 1, 20, 150, 250);
 
 -- --------------------------------------------------------
 
@@ -66,6 +86,24 @@ INSERT INTO `pomieszczenia` (`id`, `nazwa`, `id_mieszkania`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktura tabeli dla tabeli `prad`
+--
+
+CREATE TABLE `prad` (
+  `id` int(11) NOT NULL,
+  `cena_za_kWh` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
+
+--
+-- Zrzut danych tabeli `prad`
+--
+
+INSERT INTO `prad` (`id`, `cena_za_kWh`) VALUES
+(1, 0.67);
+
+-- --------------------------------------------------------
+
+--
 -- Struktura tabeli dla tabeli `urzadzenia`
 --
 
@@ -74,18 +112,24 @@ CREATE TABLE `urzadzenia` (
   `nazwa` varchar(64) COLLATE utf8_polish_ci NOT NULL,
   `zuzycie_energii` int(10) UNSIGNED NOT NULL,
   `id_mieszkania` int(10) UNSIGNED NOT NULL,
-  `id_pomieszczenia` int(10) UNSIGNED NOT NULL
+  `id_pomieszczenia` int(10) UNSIGNED NOT NULL,
+  `sredni_czas_pracy` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
 -- Zrzut danych tabeli `urzadzenia`
 --
 
-INSERT INTO `urzadzenia` (`id`, `nazwa`, `zuzycie_energii`, `id_mieszkania`, `id_pomieszczenia`) VALUES
-(1, 'toster', 120, 1, 2),
-(2, 'tv', 500, 1, 1),
-(3, 'konsola', 300, 1, 1),
-(4, 'miodnik', 20, 2, 3);
+INSERT INTO `urzadzenia` (`id`, `nazwa`, `zuzycie_energii`, `id_mieszkania`, `id_pomieszczenia`, `sredni_czas_pracy`) VALUES
+(1, 'toster', 120, 1, 2, 0),
+(2, 'tv', 500, 1, 1, 0),
+(3, 'konsola', 300, 1, 1, 0),
+(4, 'miodnik', 20, 2, 3, 0),
+(6, 'PC', 650, 1, 1, 0),
+(7, 'PC', 650, 1, 1, 5),
+(8, 'lodowka', 1200, 1, 1, 3),
+(9, 'suszarka', 450, 1, 1, 4),
+(10, 'lodowka', 1500, 2, 3, 24);
 
 -- --------------------------------------------------------
 
@@ -113,6 +157,12 @@ INSERT INTO `uzytkownicy` (`id`, `login`, `password`, `email`) VALUES
 --
 
 --
+-- Indeksy dla tabeli `fotowoltaika`
+--
+ALTER TABLE `fotowoltaika`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeksy dla tabeli `mieszkania`
 --
 ALTER TABLE `mieszkania`
@@ -125,6 +175,12 @@ ALTER TABLE `mieszkania`
 ALTER TABLE `pomieszczenia`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_mieszkania` (`id_mieszkania`);
+
+--
+-- Indeksy dla tabeli `prad`
+--
+ALTER TABLE `prad`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indeksy dla tabeli `urzadzenia`
@@ -141,8 +197,14 @@ ALTER TABLE `uzytkownicy`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT dla zrzuconych tabel
 --
+
+--
+-- AUTO_INCREMENT dla tabeli `fotowoltaika`
+--
+ALTER TABLE `fotowoltaika`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT dla tabeli `mieszkania`
@@ -157,10 +219,16 @@ ALTER TABLE `pomieszczenia`
   MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT dla tabeli `prad`
+--
+ALTER TABLE `prad`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT dla tabeli `urzadzenia`
 --
 ALTER TABLE `urzadzenia`
-  MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT dla tabeli `uzytkownicy`
