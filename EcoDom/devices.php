@@ -14,10 +14,6 @@ else
 	header('Location: index.php');
 	exit();
 }
-
-
-
-
 ?>
 <html>
 <head>
@@ -41,12 +37,38 @@ else
 		$sum_of_kWh = 0;
 		$sql = "SELECT * FROM urzadzenia WHERE id_pomieszczenia = '".$_GET['room_id']."'";
 		$r = mysqli_query($conn, $sql);
+		echo 
+			'<div class="table-wrapper"><table class="fl-table">
+				<thead>
+				<tr>
+					<th>Nazwa</th>
+					<th>Zuzycie energii</th>
+					<th>Usuń urządzenie</th>
+				</tr>
+				</thead>
+				<tbody>';
 		while($rez = mysqli_fetch_array($r))
 		{
-			echo "<p><a>".$rez['nazwa']."</a> <b>".$rez['zuzycie_energii']." W</b></p>";
+			echo '
+				<form name="deletedevice" method="POST" action="delete_device.php">
+					<tr>
+						<td>
+							<a>'.$rez['nazwa'].'</a>
+						</td>
+						<td>
+							<b>'.$rez['zuzycie_energii'].' W</b>
+						</td>
+						<td>
+							<input type="submit" name="usun" value="Usuń">
+						</td>
+					</tr>
+					<input type="text" name="id_device" class="ukryty" value="'.$rez['id'].'">
+					<input type="text" name="id_room" class="ukryty" value="'.$_GET['room_id'].'">
+				</form>';
 			$sum += $rez['zuzycie_energii'];
 			$sum_of_kWh += ($rez['sredni_czas_pracy']*$rez['zuzycie_energii']);
 		}
+		echo '</tbody></table></div>';
 		$sum_of_kWh /= 1000;
 		echo "Całkowita moc sprzętów: <b>".$sum." W</b></br>";
 		echo "Całkowita zużyta energia: <b>".$sum_of_kWh." kWh</b></br>";

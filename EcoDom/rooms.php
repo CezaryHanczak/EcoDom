@@ -37,18 +37,44 @@ else
 		$sum_of_kWh = 0;
 		$sql = "SELECT * FROM pomieszczenia WHERE id_mieszkania = '".$_GET['house_id']."'";
 		$r = mysqli_query($conn, $sql);
+		echo 
+			'<div class="table-wrapper"><table class="fl-table">
+				<thead>
+				<tr>
+					<th>Nazwa</th>
+					<th>Zuzycie energii</th>
+					<th>Usuń pomieszczenie</th>
+				</tr>
+				</thead>
+				<tbody>';
 		while($rez = mysqli_fetch_array($r))
 		{
 			$sql2 = "SELECT SUM(zuzycie_energii) FROM urzadzenia WHERE id_pomieszczenia = '".$rez['id']."'";
 			$r2 = mysqli_query($conn, $sql2);
 			$rez2 = mysqli_fetch_row($r2);
-			echo "<p><a href=devices.php?room_id=".$rez['id'].">".$rez['nazwa']."</a> <b>".$rez2[0]." W</b></p>";
+			echo 
+				'<form name="deleteroom" method="POST" action="delete_room.php">
+					<tr>
+						<td>
+							<a class="tableA" href=devices.php?room_id='.$rez['id'].'>'.$rez['nazwa'].'</a>
+						</td>
+						<td>
+							<b>'.$rez2[0].' W</b>
+						 </td>
+						<td>
+							<input type="submit" name="usun" value="Usuń">
+						</td>
+						<input type="text" name="id_room" class="ukryty" value="'.$rez['id'].'">
+						<input type="text" name="id_house" class="ukryty" value="'.$_GET['house_id'].'">
+					</tr>
+				</form>';
 			$sum += $rez2[0];
 			$sql2 = "SELECT SUM(sredni_czas_pracy*zuzycie_energii) FROM urzadzenia WHERE id_pomieszczenia = '".$rez['id']."'";
 			$r2 = mysqli_query($conn, $sql2);
 			$rez2 = mysqli_fetch_row($r2);
 			$sum_of_kWh += $rez2[0];
 		}
+		echo '</tbody></table></div>';
 		$sql = "SELECT * FROM fotowoltaika WHERE mieszkanie_id = '".$_GET['house_id']."'";
 		$r = mysqli_query($conn, $sql);
 		$rez = mysqli_fetch_array($r);
