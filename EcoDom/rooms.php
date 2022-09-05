@@ -14,13 +14,6 @@ else
 	header('Location: index.php');
 	exit();
 }
-function fred($val)
-{
-	echo '<pre>';
-	 print_r( $val );
-	echo '</pre>';
-}
-
 ?>
 <html>
 <head>
@@ -56,6 +49,12 @@ function fred($val)
 			$rez2 = mysqli_fetch_row($r2);
 			$sum_of_kWh += $rez2[0];
 		}
+		$sql = "SELECT * FROM fotowoltaika WHERE mieszkanie_id = '".$_GET['house_id']."'";
+		$r = mysqli_query($conn, $sql);
+		$rez = mysqli_fetch_array($r);
+		$sum_of_panels_power = 0;
+		$sum_of_panels_power = $rez['ilosc_paneli']* $rez['moc_panela'];
+		$sum_of_kWh -= $sum_of_panels_power;
 		$sum_of_kWh /= 1000;
 		echo "Całkowita moc sprzętów we wszystkich pomieszczeniach: <b>".$sum." W</b></br>";
 		echo "Całkowita zużyta energia we wszystkich pomieszczeniach: <b>".$sum_of_kWh." kWh</b></br>";
@@ -63,8 +62,11 @@ function fred($val)
 		$r = mysqli_query($conn, $sql);
 		$rez = mysqli_fetch_array($r);
 		$sum_of_kWh *= $rez['cena_za_kWh'];
+		if($sum_of_panels_power != 0){
+			 $sum_of_kWh -= ($sum_of_kWh*0.2);
+		}
 		$sum_of_kWh = round($sum_of_kWh, 2);
-		echo "Szacunkowy koszt przy cenie ".$rez['cena_za_kWh']."zł/kWh to: <b>".$sum_of_kWh." zł</b>";
+		echo "Szacunkowy koszt przy cenie ".$rez['cena_za_kWh']."zł/kWh to: <b>".$sum_of_kWh." zł/dzień</b>";
 		$conn->close();
 		?>
 		<br><br>

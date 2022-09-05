@@ -45,6 +45,13 @@ else
 			$rez2 = mysqli_fetch_row($r2);
 			$sum_of_kWh += $rez2[0];
 		}
+		$sql = "SELECT * FROM fotowoltaika WHERE uzytkownik_id = '".$_SESSION['id']."'";
+		$r = mysqli_query($conn, $sql);
+		$sum_of_panels_power = 0;
+		while($rez = mysqli_fetch_array($r)){
+				$sum_of_panels_power += $rez['ilosc_paneli']* $rez['moc_panela'];
+		}
+		$sum_of_kWh -= $sum_of_panels_power ;
 		$sum_of_kWh /= 1000;
 		echo "Całkowita moc sprzętów: <b>".$sum." W</b></br>";
 		echo "Całkowita zużyta energia: <b>".$sum_of_kWh." kWh</b></br>";
@@ -52,8 +59,12 @@ else
 		$r = mysqli_query($conn, $sql);
 		$rez = mysqli_fetch_array($r);
 		$sum_of_kWh *= $rez['cena_za_kWh'];
+		if($sum_of_panels_power != 0){
+			 $sum_of_kWh -= ($sum_of_kWh*0.2);
+		}
 		$sum_of_kWh = round($sum_of_kWh, 2);
-		echo "Szacunkowy koszt przy cenie ".$rez['cena_za_kWh']."zł/kWh to: <b>".$sum_of_kWh." zł</b>";
+		echo "Szacunkowy koszt przy cenie ".$rez['cena_za_kWh']."zł/kWh to: <b>".$sum_of_kWh." zł/dzień</b>";
+		echo "Szacunkowy koszt przy cenie ".$rez['cena_za_kWh']."zł/kWh to: <b>".$sum_of_kWh." zł/dzień</b>";
 		$conn->close();
 		?>
 		<br><br>

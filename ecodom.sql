@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 03 Wrz 2022, 17:11
+-- Czas generowania: 05 Wrz 2022, 17:43
 -- Wersja serwera: 10.4.24-MariaDB
 -- Wersja PHP: 8.1.6
 
@@ -30,6 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `fotowoltaika` (
   `id` int(11) NOT NULL,
   `mieszkanie_id` int(11) NOT NULL,
+  `uzytkownik_id` int(11) NOT NULL,
   `ilosc_paneli` int(11) NOT NULL,
   `powierzchnia_panela` int(11) NOT NULL,
   `moc_panela` int(11) NOT NULL
@@ -39,8 +40,8 @@ CREATE TABLE `fotowoltaika` (
 -- Zrzut danych tabeli `fotowoltaika`
 --
 
-INSERT INTO `fotowoltaika` (`id`, `mieszkanie_id`, `ilosc_paneli`, `powierzchnia_panela`, `moc_panela`) VALUES
-(1, 1, 20, 150, 250);
+INSERT INTO `fotowoltaika` (`id`, `mieszkanie_id`, `uzytkownik_id`, `ilosc_paneli`, `powierzchnia_panela`, `moc_panela`) VALUES
+(1, 1, 1, 20, 150, 250);
 
 -- --------------------------------------------------------
 

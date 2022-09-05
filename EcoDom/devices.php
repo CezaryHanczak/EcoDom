@@ -56,7 +56,7 @@ else
 
 		$sum_of_kWh *= $rez['cena_za_kWh'];
 		$sum_of_kWh = round($sum_of_kWh, 2);
-		echo "Szacunkowy koszt przy cenie ".$rez['cena_za_kWh']."zł/kWh to: <b>".$sum_of_kWh." zł</b>";
+		echo "Szacunkowy koszt przy cenie ".$rez['cena_za_kWh']."zł/kWh to: <b>".$sum_of_kWh." zł/dzień</b>";
 		$conn->close();
 		?>
 		<br><br>
