@@ -33,12 +33,12 @@ else
 		$sum_of_kWh = 0;
 		$sql = "SELECT * FROM mieszkania WHERE id_uzytkownika = '".$_SESSION['id']."'";
 		$r = mysqli_query($conn, $sql);
-		echo 
+		echo
 			'<div class="table-wrapper"><table class="fl-table">
 				<thead>
 				<tr>
 					<th>Nazwa</th>
-					<th>Zuzycie energii</th>
+					<th>Zużycie energii</th>
 					<th>Usuń mieszkanie</th>
 				</tr>
 				</thead>
@@ -48,7 +48,7 @@ else
 			$sql2 = "SELECT SUM(zuzycie_energii) FROM urzadzenia WHERE id_mieszkania = '".$rez['id']."'";
 			$r2 = mysqli_query($conn, $sql2);
 			$rez2 = mysqli_fetch_row($r2);
-			echo 
+			echo
 				'<form name="deletehouse" method="POST" action="delete_house.php">
 					<tr>
 						<td>
@@ -88,7 +88,6 @@ else
 			 $sum_of_kWh -= ($sum_of_kWh*0.2);
 		}
 		$sum_of_kWh = round($sum_of_kWh, 2);
-		echo "Szacunkowy koszt przy cenie ".$rez['cena_za_kWh']."zł/kWh to: <b>".$sum_of_kWh." zł/dzień</b>";
 		echo "Szacunkowy koszt przy cenie ".$rez['cena_za_kWh']."zł/kWh to: <b>".$sum_of_kWh." zł/dzień</b>";
 		$conn->close();
 		?>

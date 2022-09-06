@@ -33,9 +33,9 @@ else
       $house_id = $_GET['house_id'];
       echo "<input type='hidden' name='house_id' value='".$house_id."' />";
       ?>
-			<input type="number" required="required" placeholder="Powierzchnia panela w cm" name="area" />
-      <input type="number" required="required" placeholder="Moc panela" name="power" />
-      <input type="number" required="required" placeholder="Ilość paneli" name="number" />
+			<input type="number" min="0" step="0.1" required="required" placeholder="Powierzchnia panela w cm" name="area" />
+      <input type="number" min="0" step="0.1" required="required" placeholder="Moc panela" name="power" />
+      <input type="number" min="0" required="required" placeholder="Ilość paneli" name="number" />
 			<input type="submit" value="Dodaj fotowoltaike" />
 		</form>
 	</div>

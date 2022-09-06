@@ -37,12 +37,12 @@ else
 		$sum_of_kWh = 0;
 		$sql = "SELECT * FROM urzadzenia WHERE id_pomieszczenia = '".$_GET['room_id']."'";
 		$r = mysqli_query($conn, $sql);
-		echo 
+		echo
 			'<div class="table-wrapper"><table class="fl-table">
 				<thead>
 				<tr>
 					<th>Nazwa</th>
-					<th>Zuzycie energii</th>
+					<th>Zużycie energii</th>
 					<th>Usuń urządzenie</th>
 				</tr>
 				</thead>

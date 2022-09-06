@@ -20,7 +20,7 @@ if((strlen($login)<6) || (strlen($login)>20))
 if(ctype_alnum($login)==false)
 {
 	$wszystko_OK=false;
-	$_SESSION['e_login2']="Nick może składać się tylko z liter i cyfr.";	
+	$_SESSION['e_login2']="Nick może składać się tylko z liter i cyfr.";
 }
 $rezultat = $conn->query("Select id FROM uzytkownicy WHERE login='$login'");
 $ile_takich_loginow = $rezultat->num_rows;
@@ -40,17 +40,17 @@ if((strlen($haslo)<6) || (strlen($haslo)>20))
 if (!preg_match('/[A-Z]/', $haslo))
 {
 	$wszystko_OK=false;
-	$_SESSION['e_haslo3']="Hasło musi zawierać minimum 1 dużą literę, 1 małą literę oraz 1 cyfrę.";	
+	$_SESSION['e_haslo3']="Hasło musi zawierać minimum 1 dużą literę, 1 małą literę oraz 1 cyfrę.";
 }
 if (!preg_match('/[a-z]/', $haslo))
 {
 	$wszystko_OK=false;
-	$_SESSION['e_haslo3']="Hasło musi zawierać minimum 1 dużą literę, 1 małą literę oraz 1 cyfrę.";	
+	$_SESSION['e_haslo3']="Hasło musi zawierać minimum 1 dużą literę, 1 małą literę oraz 1 cyfrę.";
 }
 if (!preg_match('/[0-9]/', $haslo))
 {
 	$wszystko_OK=false;
-	$_SESSION['e_haslo3']="Hasło musi zawierać minimum 1 dużą literę, 1 małą literę oraz 1 cyfrę.";	
+	$_SESSION['e_haslo3']="Hasło musi zawierać minimum 1 dużą literę, 1 małą literę oraz 1 cyfrę.";
 }
 //potwierdzanie
 if($haslo != $potw)
@@ -79,7 +79,7 @@ if($wszystko_OK == true)
 	$_SESSION['login'] = $wiersz['login'];
 	$_SESSION['haslo'] = $wiersz['password'];
 	$_SESSION['email'] = $wiersz['email'];
-	
+
 	//Usuwanie zmiennych mówiących o blędach przy rejestracji i przechowywująych danych w przypadku błędnej rejestracji
 	if(isset($_SESSION['fr_login']))unset($_SESSION['fr_login']);
 	if(isset($_SESSION['fr_haslo']))unset($_SESSION['fr_haslo']);
@@ -100,7 +100,7 @@ if($wszystko_OK == true)
 
 else
 {
-	header('Location: index.php');	
+	header('Location: index.php');
 }
 
 $conn->close();

@@ -24,7 +24,7 @@ if((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany']==true))
 				if(isset($_SESSION['fr_login']))
 				{
 					echo $_SESSION['fr_login'];
-					unset($_SESSION['fr_login']);	
+					unset($_SESSION['fr_login']);
 				}
 			?>"/>
 			<?php
@@ -32,11 +32,14 @@ if((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany']==true))
 				{
 					echo '<div class="error">'.$_SESSION['e_login1'].'</div>';
 					unset($_SESSION['e_login1']);
+					unset($_SESSION['e_login2']);
+					unset($_SESSION['e_login3']);
 				}
 				if(isset($_SESSION['e_login2']))
 				{
 					echo '<div class="error">'.$_SESSION['e_login2'].'</div>';
 					unset($_SESSION['e_login2']);
+					unset($_SESSION['e_login3']);
 				}
 				if(isset($_SESSION['e_login3']))
 				{
@@ -48,7 +51,7 @@ if((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany']==true))
 				if(isset($_SESSION['fr_email']))
 				{
 					echo $_SESSION['fr_email'];
-					unset($_SESSION['fr_email']);	
+					unset($_SESSION['fr_email']);
 				}
 			?>"/>
 			<?php
@@ -62,7 +65,7 @@ if((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany']==true))
 				if(isset($_SESSION['fr_haslo']))
 				{
 					echo $_SESSION['fr_haslo'];
-					unset($_SESSION['fr_haslo']);	
+					unset($_SESSION['fr_haslo']);
 				}
 			?>"/>
 			<?php
@@ -70,6 +73,7 @@ if((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany']==true))
 				{
 					echo '<div class="error">'.$_SESSION['e_haslo1'].'</div>';
 					unset($_SESSION['e_haslo1']);
+					unset($_SESSION['e_haslo3']);
 				}
 				if(isset($_SESSION['e_haslo3']))
 				{
@@ -81,7 +85,7 @@ if((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany']==true))
 				if(isset($_SESSION['fr_potw']))
 				{
 					echo $_SESSION['fr_potw'];
-					unset($_SESSION['fr_potw']);	
+					unset($_SESSION['fr_potw']);
 				}
 			?>"/>
 			<?php

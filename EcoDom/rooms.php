@@ -37,12 +37,12 @@ else
 		$sum_of_kWh = 0;
 		$sql = "SELECT * FROM pomieszczenia WHERE id_mieszkania = '".$_GET['house_id']."'";
 		$r = mysqli_query($conn, $sql);
-		echo 
+		echo
 			'<div class="table-wrapper"><table class="fl-table">
 				<thead>
 				<tr>
 					<th>Nazwa</th>
-					<th>Zuzycie energii</th>
+					<th>Zużycie energii</th>
 					<th>Usuń pomieszczenie</th>
 				</tr>
 				</thead>
@@ -52,7 +52,7 @@ else
 			$sql2 = "SELECT SUM(zuzycie_energii) FROM urzadzenia WHERE id_pomieszczenia = '".$rez['id']."'";
 			$r2 = mysqli_query($conn, $sql2);
 			$rez2 = mysqli_fetch_row($r2);
-			echo 
+			echo
 				'<form name="deleteroom" method="POST" action="delete_room.php">
 					<tr>
 						<td>
