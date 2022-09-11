@@ -19,8 +19,13 @@ else
 <head>
 <title>EkoDom</title>
 <link rel="stylesheet" href="css/style.css">
+<script src="https://cdn.plot.ly/plotly-2.14.0.min.js"></script>
+<script> 
+	var powerValues = [];
+	var chartLabels = [];
+</script>
 </head>
-
+	
 <body>
 <div id="container">
 	<div id="menu">
@@ -68,6 +73,7 @@ else
 						<input type="text" name="id_house" class="ukryty" value="'.$_GET['house_id'].'">
 					</tr>
 				</form>';
+			echo '<script>powerValues.push(' . $rez2[0] . '); chartLabels.push("' . $rez['nazwa'] . '");</script>';
 			$sum += $rez2[0];
 			$sql2 = "SELECT SUM(sredni_czas_pracy*zuzycie_energii) FROM urzadzenia WHERE id_pomieszczenia = '".$rez['id']."'";
 			$r2 = mysqli_query($conn, $sql2);
@@ -79,7 +85,11 @@ else
 		$r = mysqli_query($conn, $sql);
 		$rez = mysqli_fetch_array($r);
 		$sum_of_panels_power = 0;
-		$sum_of_panels_power = $rez['ilosc_paneli']* $rez['moc_panela'];
+		if ($rez == NULL)
+			$sum_of_panels_power = 0;
+		else {
+			$sum_of_panels_power = $rez['ilosc_paneli'] * $rez['moc_panela'];
+		}
 		$sum_of_kWh -= $sum_of_panels_power;
 		$sum_of_kWh /= 1000;
 		echo "Całkowita moc sprzętów we wszystkich pomieszczeniach: <b>".$sum." W</b></br>";
@@ -110,6 +120,29 @@ else
 			?>
 			<input type="submit" value="Dodaj fotowoltaike" />
 		</form>
+
+		<div id="plot" class="plot"></div>
+
+		<script>
+       		var data = [{
+			  values: powerValues,
+			  labels: chartLabels,
+			  type: 'pie'
+			}];
+			
+			var layout = {
+			    title: 'Wykres zużycia energii w pomieszczeniach',
+				width: '20%',
+				paper_bgcolor: 'rgb(85,164,78)'
+			};
+			
+			var config = {
+			  showEditInChartStudio: false,
+			  plotlyServerURL: "https://chart-studio.plotly.com"
+			};
+
+			Plotly.newPlot('plot', data, layout, config);
+    	</script>
 	</div>
 </div>
 </body>

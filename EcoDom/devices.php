@@ -19,8 +19,13 @@ else
 <head>
 <title>EkoDom</title>
 <link rel="stylesheet" href="css/style.css">
+<script src="https://cdn.plot.ly/plotly-2.14.0.min.js"></script>
+<script> 
+	var powerValues = [];
+	var chartLabels = [];
+</script>
 </head>
-
+	
 <body>
 <div id="container">
 	<div id="menu">
@@ -65,6 +70,7 @@ else
 					<input type="text" name="id_device" class="ukryty" value="'.$rez['id'].'">
 					<input type="text" name="id_room" class="ukryty" value="'.$_GET['room_id'].'">
 				</form>';
+			echo '<script>powerValues.push(' . $rez['zuzycie_energii'] . '); chartLabels.push("' . $rez['nazwa'] . '");</script>';
 			$sum += $rez['zuzycie_energii'];
 			$sum_of_kWh += ($rez['sredni_czas_pracy']*$rez['zuzycie_energii']);
 		}
@@ -89,6 +95,29 @@ else
 			?>
 			<input type="submit" value="Dodaj Urządzenie" />
 		</form>
+
+		<div id="plot" class="plot"></div>
+
+		<script>
+       		var data = [{
+			  values: powerValues,
+			  labels: chartLabels,
+			  type: 'pie'
+			}];
+			
+			var layout = {
+			    title: 'Wykres zużycia energii przez urządzenia',
+				width: '20%',
+				paper_bgcolor: 'rgb(85,164,78)'
+			};
+			
+			var config = {
+			  showEditInChartStudio: false,
+			  plotlyServerURL: "https://chart-studio.plotly.com"
+			};
+
+			Plotly.newPlot('plot', data, layout, config);
+    	</script>
 	</div>
 </div>
 </body>
