@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 05 Wrz 2022, 17:43
+-- Czas generowania: 14 Wrz 2022, 12:58
 -- Wersja serwera: 10.4.24-MariaDB
 -- Wersja PHP: 8.1.6
 
@@ -32,8 +32,8 @@ CREATE TABLE `fotowoltaika` (
   `mieszkanie_id` int(11) NOT NULL,
   `uzytkownik_id` int(11) NOT NULL,
   `ilosc_paneli` int(11) NOT NULL,
-  `powierzchnia_panela` int(11) NOT NULL,
-  `moc_panela` int(11) NOT NULL
+  `powierzchnia_panela` double NOT NULL,
+  `moc_panela` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
@@ -41,7 +41,7 @@ CREATE TABLE `fotowoltaika` (
 --
 
 INSERT INTO `fotowoltaika` (`id`, `mieszkanie_id`, `uzytkownik_id`, `ilosc_paneli`, `powierzchnia_panela`, `moc_panela`) VALUES
-(1, 1, 1, 20, 150, 250);
+(2, 1, 1, 25, 25.5, 245.5);
 
 -- --------------------------------------------------------
 
@@ -205,7 +205,7 @@ ALTER TABLE `uzytkownicy`
 -- AUTO_INCREMENT dla tabeli `fotowoltaika`
 --
 ALTER TABLE `fotowoltaika`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT dla tabeli `mieszkania`
